@@ -118,15 +118,6 @@
             font-family: 'Quicksand', sans-serif;
         }
 
-        .destacado {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            color: #b3415c;
-            display: inline-block;
-            margin: 0 5px;
-            text-shadow: 1px 1px 0 #ffe0e0;
-        }
-
         .chiapanequita {
             font-weight: 700;
             font-size: 2rem;
@@ -194,6 +185,7 @@
             border: 3px solid #ffe0e0;
             position: relative;
             cursor: pointer;
+            transition: all 0.1s ease;
         }
 
         .btn-no:hover {
@@ -241,11 +233,14 @@
             100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
         }
 
-        .counter {
-            margin-top: 20px;
-            color: #b5a0a0;
-            font-size: 1rem;
-            font-style: italic;
+        .footer-message {
+            margin-top: 25px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #b3415c;
+            text-align: right;
+            border-top: 2px solid #ffc2c2;
+            padding-top: 20px;
         }
 
         @media (max-width: 500px) {
@@ -255,16 +250,6 @@
             .chiapanequita { font-size: 1.6rem; }
             .question { font-size: 1.6rem; }
             .btn { padding: 12px 30px; font-size: 1.4rem; }
-        }
-
-        .firma {
-            margin-top: 25px;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            color: #b3415c;
-            text-align: right;
-            border-top: 2px solid #ffc2c2;
-            padding-top: 20px;
         }
     </style>
 </head>
@@ -283,7 +268,7 @@
                 Quería preguntarte algo...
             </div>
             <div class="mensaje-inicial" style="margin-top: 20px;">
-                Pero quería saber si querías<span class="destacado"></span><br>
+                Pero quería saber si querías<br>
                 <span style="font-size: 2rem; color: #b3415c;">¿Quieres ser mi 14 de febrero?</span>
             </div>
             <div class="mensaje-inicial" style="margin-top: 20px; font-size: 1.2rem;">
@@ -308,12 +293,12 @@
             ✨ ¿Segura que vas a decir que no, Chiapanequita? ✨
         </div>
         
-        <div id="contador" class="counter">
-            El "NO" ha escapado <span id="escapeCount">0</span> veces 🙈
-        </div>
+        <div id="contador" class="counter" style="display: none;"></div>
 
-        <div class="firma">
-            Con cariño, mimi 💕
+        <div class="footer-message">
+            💞 14 de febrero - Día de la amistad y el amor 💞
+            <br>
+            <span style="font-size: 1.4rem;">Con cariño, de a yo para mimi 💕</span>
         </div>
     </div>
 
@@ -334,8 +319,6 @@
         const btnSi = document.getElementById('btnSi');
         const btnNo = document.getElementById('btnNo');
         const mensaje = document.getElementById('mensaje');
-        const escapeCount = document.getElementById('escapeCount');
-        let escapes = 0;
         let noClickCount = 0;
 
         function rainEmoji(emoji = '💖', count = 40) {
@@ -369,14 +352,9 @@
             btnNo.disabled = true;
             btnNo.style.opacity = '0.5';
             btnNo.style.cursor = 'not-allowed';
-            
-            document.getElementById('contador').innerHTML = '💞 14 de febrero - Día de la amistad y el amor 💞';
         });
 
-        function moveButton() {
-            escapes++;
-            escapeCount.textContent = escapes;
-            
+        function moveButton() {            
             const maxX = window.innerWidth - btnNo.offsetWidth - 50;
             const maxY = window.innerHeight - btnNo.offsetHeight - 50;
             
@@ -390,10 +368,6 @@
             btnNo.style.left = x + 'px';
             btnNo.style.top = y + 'px';
             btnNo.style.zIndex = '9999';
-
-            if (escapes > 3) {
-                btnSi.style.transform = `scale(${1 + (escapes * 0.03)})`;
-            }
         }
 
         btnNo.addEventListener('mouseover', moveButton);
