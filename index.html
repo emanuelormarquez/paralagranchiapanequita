@@ -59,30 +59,6 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 3px solid #ffc2c2;
             animation: fadeIn 1.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: "💕";
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            font-size: 120px;
-            opacity: 0.1;
-            transform: rotate(-15deg);
-            color: #ff6b8b;
-        }
-
-        .container::after {
-            content: "💕";
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            font-size: 120px;
-            opacity: 0.1;
-            transform: rotate(15deg);
-            color: #ff6b8b;
         }
 
         @keyframes fadeIn {
@@ -183,9 +159,12 @@
             background: #6c5a5a;
             color: #ffe8e8;
             border: 3px solid #ffe0e0;
-            position: relative;
+            position: fixed !important;
             cursor: pointer;
             transition: all 0.1s ease;
+            z-index: 9999 !important;
+            top: 50%;
+            left: 70%;
         }
 
         .btn-no:hover {
@@ -257,6 +236,9 @@
     <div class="floating-hearts" id="heartContainer"></div>
     <div class="emoji-rain" id="emojiRain"></div>
 
+    <!-- BOTÓN NO FUERA DEL CONTENEDOR -->
+    <button id="btnNo" class="btn btn-no">NO 💔</button>
+
     <div class="container">
         <h1>💌 Para ti, Chiapanequita 💌</h1>
         
@@ -286,7 +268,7 @@
         
         <div class="buttons">
             <button id="btnSi" class="btn btn-si">SÍ 💖</button>
-            <button id="btnNo" class="btn btn-no">NO 💔</button>
+            <!-- El botón NO ya está fuera -->
         </div>
 
         <div id="mensaje" class="message-box">
@@ -364,10 +346,9 @@
             x = Math.max(30, Math.min(x, maxX));
             y = Math.max(30, Math.min(y, maxY));
             
-            btnNo.style.position = 'fixed';
             btnNo.style.left = x + 'px';
             btnNo.style.top = y + 'px';
-            btnNo.style.zIndex = '9999';
+            btnNo.style.position = 'fixed';
         }
 
         btnNo.addEventListener('mouseover', moveButton);
@@ -400,10 +381,10 @@
                 let y = parseFloat(btnNo.style.top);
                 if (x > maxX) btnNo.style.left = maxX + 'px';
                 if (y > maxY) btnNo.style.top = maxY + 'px';
+                if (x < 30) btnNo.style.left = '30px';
+                if (y < 30) btnNo.style.top = '30px';
             }
         });
-
-        console.log("💕 Chiapanequita, sabía que ibas a decir que sí 💕");
     </script>
 </body>
 </html>
