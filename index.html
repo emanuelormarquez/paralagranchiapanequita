@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi 14? 💖</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 500px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-si {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        .btn-si:hover {
+            background: #ff1e3c;
+            transform: scale(1.1);
+        }
+
+        .btn-no {
+            background: #6c757d;
+            color: white;
+            position: relative;
+        }
+
+        .btn-no:hover {
+            background: #5a6268;
+        }
+
+        .mensaje {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            color: #ff4d6d;
+            font-weight: bold;
+            min-height: 60px;
+        }
+
+        .corazon {
+            position: absolute;
+            animation: flotar 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .btn { padding: 0.8rem 1.5rem; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💖 ¿Quieres ser mi 14? 💖</h1>
+        
+        <div class="buttons">
+            <button id="btnSi" class="btn btn-si">SÍ 💘</button>
+            <button id="btnNo" class="btn btn-no">NO 💔</button>
+        </div>
+
+        <div id="mensaje" class="mensaje"></div>
+    </div>
+
+    <script>
+        const btnSi = document.getElementById('btnSi');
+        const btnNo = document.getElementById('btnNo');
+        const mensaje = document.getElementById('mensaje');
+        
+        // Corazones flotantes
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            corazon.innerHTML = '💖';
+            corazon.className = 'corazon';
+            corazon.style.left = Math.random() * 100 + '%';
+            corazon.style.top = Math.random() * 100 + '%';
+            corazon.style.fontSize = Math.random() * 30 + 20 + 'px';
+            corazon.style.animation = `flotar ${Math.random() * 3 + 2}s ease-in-out infinite`;
+            document.body.appendChild(corazon);
+            
+            setTimeout(() => {
+                corazon.remove();
+            }, 5000);
+        }
+        
+        setInterval(crearCorazon, 300);
+
+        // Botón SÍ
+        btnSi.addEventListener('click', function() {
+            mensaje.innerHTML = '💞 ¡SABÍA QUE DIRÍAS QUE SÍ! 💞<br>💕 Eres la mejor persona 💕';
+            mensaje.style.color = '#ff4d6d';
+            
+            // Explosión de corazones
+            for(let i = 0; i < 20; i++) {
+                setTimeout(crearCorazon, i * 50);
+            }
+        });
+
+        // Botón NO - SE ALEJA
+        btnNo.addEventListener('mouseover', function() {
+            const maxX = window.innerWidth - this.offsetWidth - 50;
+            const maxY = window.innerHeight - this.offsetHeight - 50;
+            
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            
+            // Asegurar que no se salga completamente
+            x = Math.max(10, Math.min(x, maxX));
+            y = Math.max(10, Math.min(y, maxY));
+            
+            this.style.position = 'fixed';
+            this.style.left = x + 'px';
+            this.style.top = y + 'px';
+        });
+
+        // También se aleja al hacer click
+        btnNo.addEventListener('click', function(e) {
+            e.preventDefault();
+            const maxX = window.innerWidth - this.offsetWidth - 50;
+            const maxY = window.innerHeight - this.offsetHeight - 50;
+            
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            
+            x = Math.max(10, Math.min(x, maxX));
+            y = Math.max(10, Math.min(y, maxY));
+            
+            this.style.position = 'fixed';
+            this.style.left = x + 'px';
+            this.style.top = y + 'px';
+            
+            mensaje.innerHTML = '👀 No te escapas...';
+            mensaje.style.color = '#6c757d';
+        });
+
+        // Prevenir que el botón NO se salga de la pantalla al redimensionar
+        window.addEventListener('resize', function() {
+            const btnNo = document.getElementById('btnNo');
+            if (btnNo.style.position === 'fixed') {
+                const maxX = window.innerWidth - btnNo.offsetWidth - 50;
+                const maxY = window.innerHeight - btnNo.offsetHeight - 50;
+                
+                let x = parseFloat(btnNo.style.left);
+                let y = parseFloat(btnNo.style.top);
+                
+                if (x > maxX) btnNo.style.left = maxX + 'px';
+                if (y > maxY) btnNo.style.top = maxY + 'px';
+                if (x < 10) btnNo.style.left = '10px';
+                if (y < 10) btnNo.style.top = '10px';
+            }
+        });
+    </script>
+</body>
+</html>
